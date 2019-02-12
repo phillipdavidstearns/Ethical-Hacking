@@ -33,8 +33,8 @@ By using ethical hacking principles to give us the attacker’s perspective we c
 
 * No, this is not a blackhat hacking workshop.
 * If you want to join Anonymous, look elsewhere.
-* We're not going to learn how to built a botnet.
-* It's not offensive cyber security certification class.
+* We're not going to learn how to build a botnet.
+* This is not offensive cyber security certification class.
 
 ## Who am I?
 
@@ -273,7 +273,9 @@ You might ask some obvious questions like...
 
 ## Who am I?
 
-	whoami
+```
+whoami
+```
 
 This command displays the effective user ID. By default, OSX logs you into a bash session with the account you executed the application with. It's possible to change your user ID using the login command. From there you can enter the user and password.
 
@@ -291,14 +293,18 @@ Note: In these examples we're adding what are called arguments to our command. W
 
 ## Where am I?
 
-	pwd
+```
+pwd
+```
 
 This command returns the **P**athname of the current **W**orking **D**irectory. When you execute commands, by default they act on the current working directory.
 
 
 ## Look around.
 
-	ls
+```
+ls
+```
 
 **L**i**S**t lists the contents of a directory.
 
@@ -323,7 +329,9 @@ But then you could also use the wildcard symbol `*` with `ls`. `ls *.sh` is much
 
 ## Less
 
-	less
+```
+less
+```
 
 displays a file or input stream in a way that allows for movement forwards and backwards interactively.
 
@@ -334,7 +342,9 @@ displays a file or input stream in a way that allows for movement forwards and b
 
 Let's enter `man ls` and  check out the **synopsis** or usage example:
 
-	ls [-ABCFGHLOPRSTUW@abcdefghiklmnopqrstuwx1] [file ...]
+```
+ls [-ABCFGHLOPRSTUW@abcdefghiklmnopqrstuwx1] [file ...]
+```
 
 Here we see the command `ls` followed by a list of available `[-options]` followed by an additional arguments `[file ...]`
 
@@ -344,7 +354,9 @@ These are "switch" arguments passed to a command, enabling or disabling certain 
 
 Some of these options require additional arguments. For example, a command may have an option to output to a file using the `-o` switch followed by the path to the file.
 
-	command -o /path/to/file/filename.ext
+```
+command -o /path/to/file/filename.ext
+```
 
 It’s typical to see a command usage indicate how a command is used, e.g.
 
@@ -354,11 +366,15 @@ It’s typical to see a command usage indicate how a command is used, e.g.
 
 Things might get messy at this point. Need to clear your screen?
 
-	clear
+```
+clear
+```
 
 ## Navigation
 
-	cd
+```
+cd
+```
 
 Changes the current working directory. Think of this as where you are.
 
@@ -385,7 +401,9 @@ Run `cd ~` and `pwd` to make sure you're in `/Users/YourUserName`
 
 ## Make Directory
 
-	mkdir
+```
+mkdir
+```
 
 1. Run `mkdir ~/playpen` to create a new directory (folder) for us to play in.
 2. Then run `cd ~/playpen` to change to that folder.
@@ -396,7 +414,9 @@ Tip: You can string commands together in a single command line entry using `;`. 
 
 ## Remove Directory
 
-	rmdir 
+```
+rmdir 
+```
     
 Removes an empty directory
 
@@ -433,7 +453,9 @@ Then press `control + c` to end the process.
 
 ## Write to the standard output
 
-	 echo
+```
+echo
+```
 
 Can be used to write string and stored values to the standard output.
 
@@ -444,7 +466,9 @@ Can be used to write string and stored values to the standard output.
 
 ## Printing files to the standard output
 
-	cat
+```
+cat
+```
     
 Concatenate and print files. Usually used with the `>` to contents to standard out
 
@@ -454,7 +478,9 @@ Concatenate and print files. Usually used with the `>` to contents to standard o
 
 ## Redirection
 
-	| > >>
+```
+| > >>
+```
 
 These symbols redirect the output of a command to different places.
 * `|` pipes the output of the preceding command to the input of the following
@@ -467,7 +493,9 @@ These symbols redirect the output of a command to different places.
 
 ## Copying
 
-	cp
+```
+cp
+```
 
 Copies a file or directory from one location to another.
 
@@ -479,7 +507,9 @@ Copies a file or directory from one location to another.
 
 ## Deleting
 
-	rm
+```
+rm
+```
 
 Deletes a file or directory. **!!! There is no way of undeleting !!!**
 
@@ -494,7 +524,9 @@ WARNING!!!
 
 ## Opening Files
 
-	open
+```
+open
+```
 
 Uses the OS to launch the default application for viewing a specified file. Can also be used to launch an application.
     
@@ -558,10 +590,12 @@ Noe we're going to write a super simple script, change it's permissions to make 
 ## helloworld.sh
 
 In `nano` type:
-	
-    #!/bin/bash
-    clear
-    echo 'Hello World!'
+
+```
+#!/bin/bash
+clear
+echo 'Hello World!'
+```
     
 Then press `control + x`
 Followed by `y` for yes
