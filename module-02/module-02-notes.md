@@ -3,6 +3,8 @@
 
 # Ethical Hacking Module 2:
 
+![](images/kali.jpg)
+
 ## Getting Started with Kali Linux
 
 This is the second installment of a series of ethical hacking courses for folks with non-technical backgrounds.
@@ -22,6 +24,8 @@ This is the second installment of a series of ethical hacking courses for folks 
 * a USB wifi adapter capable of short range attacks on WiFi routers
 
 ## Package Managers
+
+![](images/managers.gif)
 
 ### Homebrew for OSX
 
@@ -58,6 +62,8 @@ We'll use this to verify the code signature of our Kali sha256sums and the .iso 
 The Linux command line interface package handling utility. For all the same reasons you'd want to use Homebrew on OSX. We'll get more into using this utility once we have Kali setup.
 
 ## Download Kali Linux Images Securely
+
+![](images/secure.gif)
 
 We're downloading a tool that contains tools that can be easily used for offensive purposes, one that has the ability to inflict serious harm on connected systems if not handled with care. To ensure the integrity of your security and the security of anything you might be hacking, it is absolutely necessary to verify your .iso files before you do anything else! The last thing we want is to infect ourselves and our friends or clients with malicious software.
 
@@ -106,6 +112,8 @@ Phew! Our files are legit and untampered. Straight from the source!
 
 ## Writing our Kali .iso to our USB drive
 
+![](images/copy.gif)
+
 We're going to use the `dd` command to write the .iso to our thumbdrive.
 
 >
@@ -142,3 +150,5 @@ sudo dd if=kali-linux-2018.4-amd64.iso of=/dev/disk7 bs=1m
 8. To boot from our drive, hold down **option** immediately after powering the device up. Our live boot will show up as EFI.
 
 ## Setting up Encrypted Persistence
+
+![](images/encryption.gif)

@@ -524,6 +524,9 @@ WARNING!!!
 
 ## Opening Files
 
+![](images/GUI2.gif)
+Miss your GUI yet?
+
 ```
 open
 ```
