@@ -757,3 +757,11 @@ A very flexible and feature packed file pattern searcher.
 ![](images/power.gif)
 
 Keep on hacking! See you next session!
+
+---
+
+## Additional Resources:
+
+* [Basic UNIX Commands](http://mally.stanford.edu/~sr/computing/basic-unix.html)
+* [Introduction to the Command Line Interface](https://help.uis.cam.ac.uk/service/help-support/training/downloads/course-files/programming-student-files/unix-cli)
+* [UNIX System Further Commands](https://help.uis.cam.ac.uk/service/help-support/training/downloads/course-files/programming-student-files/commands)
