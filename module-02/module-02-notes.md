@@ -63,6 +63,8 @@ The Linux command line interface package handling utility. For all the same reas
 
 ## Download Kali Linux Images Securely
 
+This walkthrough borrows heavily from the [Downloading Kali Linux Guide](https://docs.kali.org/introduction/download-official-kali-linux-images).
+
 ![](images/secure.gif)
 
 We're downloading a tool that contains tools that can be easily used for offensive purposes, one that has the ability to inflict serious harm on connected systems if not handled with care. To ensure the integrity of your security and the security of anything you might be hacking, it is absolutely necessary to verify your .iso files before you do anything else! The last thing we want is to infect ourselves and our friends or clients with malicious software.
@@ -111,6 +113,8 @@ kali-linux-2018.4-amd64.iso: OK
 Phew! Our files are legit and untampered. Straight from the source!
 
 ## Writing our Kali .iso to our USB drive
+
+This walkthrough borrows heavily from the [Making a Kali Bootable USB Drive Guide](https://docs.kali.org/downloading/kali-linux-live-usb-install).
 
 ![](images/copy.gif)
 
