@@ -3,7 +3,7 @@
 
 # Ethical Hacking Module 2:
 
-![](images/kali.jpg)
+![](images/kali.png)
 
 ## Getting Started with Kali Linux
 
@@ -169,36 +169,64 @@ To cover you @\$\$ and your clients', we need to make sure we've encrypted our L
 
 1. When you boot into Kali, a splash screen will appear. Select the option `Live USB Encrypted Persistence` and press enter.
 
-![](images/kali.jpg)
+![](images/kali.png)
 
-2. Once your desktop loads, look for the Terminal in the dock to the left. Click it to open the Terminal.
+2. Once your desktop loads, look for the Terminal in the dock to the left. Click it to open the Terminal. You can also run it by pressing `command+shift+2`.
 
-3. Run `fdisk -l` to verify that we can see the `/dev/sdb1` and `/dev/sdb2` partitions. These are our Kali Live partitions.
-
-3. We need to create a new partition in the empty space after our Kali Live partitions.
+3. Run `fdisk -l` to verify that we can see the `/dev/sdb1` and `/dev/sdb2` partitions. You should see info for other drives on your system but focus on Disk /dev/sdb:
 
 ```
-parted /dev/sdb mkpart primary 3gb 32gb
+Disk /dev/sdb: 57.3 GiB, c bytes, 120127488 sectors
+Disk model: Ultra Fit       
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xdb584c61
+
+Device     Boot   Start     End Sectors  Size Id Type
+/dev/sdb1  *         64 6691199 6691136  3.2G 17 Hidden HPFS/NTFS
+/dev/sdb2       6691200 6692607    1408  704K  1 FAT12
 ```
 
-The parted command may advise you that it can’t use the exact start value you specified; if so, accept the suggested value instead. If advised that the partition isn’t placed at an optimal location, “ignore” it. When parted completes, the new partition should have been created at `/dev/sdb3`; again, this can be verified with the command `fdisk -l`.
+4. We want to create a partition after our Kali Live partitions above. We do this with the `parted` command by specifying where we want to start and end our partition. The Kali Live partitions end at **sector 6692607** and the total disk size is **61505273856 bytes**, so we want our new partition to **start at sector 
+6692608** and **end at 61505273855 bytes**. Run the following command using numbers specific to your current image and drive:
 
-4. Next, we initialize LUKS encryption on the partition we just created. When warned that the operation will overwrite any data on the partition, type `YES` (all uppercase).
+```
+parted /dev/sdb mkpart primary 6692608s 61505273855b
+```
+
+5. The parted command may advise you that it can’t use the exact start value you specified; if so, accept the suggested value instead by typing "Y" and pressing enter. If advised that the partition isn’t placed at an optimal location, ignore it by typing "I" and pressing enter. When parted completes, the new partition should have been created at `/dev/sdb3`; again, this can be verified with the command `fdisk -l`:
+
+```
+Device     Boot   Start       End   Sectors  Size Id Type
+/dev/sdb1  *         64   6691199   6691136  3.2G 17 Hidden HPFS/NTFS
+/dev/sdb2       6691200   6692607      1408  704K  1 FAT12
+/dev/sdb3       6692608 120127487 113434880 54.1G 83 Linux
+```
+
+6. Next, we initialize LUKS encryption on the partition we just created. When warned that the operation will overwrite any data on the partition, type `YES` (all uppercase):
 
 ```
 cryptsetup --verbose --verify-passphrase luksFormat /dev/sdb3
+```
+
+7. You'll be prompted for a pass phrase. Use a pass phrase that is strong and memorable or store this in a safe place. You'll have to enter it at every boot into `Live USB Encrypted Persistence`. You can still Live boot without it, but won't have access to encrypted data without it. Enter it a second time to confirm. Now to finish setting up the persistence on the encrypted partition:
+
+
+```
 cryptsetup luksOpen /dev/sdb3 my_usb
 ```
 
-5. You'll be prompted for a pass phrase. Use a pass phrase that is strong and memorable or store this in a safe place. You'll have to enter it at every boot into `Live USB Encrypted Persistence`. You can still Live boot without it, but won't have access to encrypted data without it. Enter it a second time to confirm.
 
-6. Create the ext3 filesystem, and label it “persistence”.
+8. Create the ext3 filesystem, and label it “persistence”.
 
 ```
 mkfs.ext3 -L persistence /dev/mapper/my_usb
 e2label /dev/mapper/my_usb persistence
 ```
-7. Create a mount point, mount our new encrypted partition there, set up the persistence.conf file, and unmount the partition.
+
+9. Create a mount point, mount our new encrypted partition there, set up the persistence.conf file, and unmount the partition.
 
 ```
 mkdir -p /mnt/my_usb
@@ -207,14 +235,91 @@ echo "/ union" > /mnt/my_usb/persistence.conf
 umount /dev/mapper/my_usb
 ```
 
-8. Close the encrypted channel to our persistence partition.
+10. Close the encrypted channel to our persistence partition.
 
 ```
 cryptsetup luksClose /dev/mapper/my_usb
 ```
 
-### Congratulations!
+-
+
+# Congratulations!
 
 ![](images/letsgethacking.gif)
 
 You've now got a secure live bootable hacking platform on a USB drive. Use your powers wisely.
+
+## Wait... Where's my WiFi?
+
+![](images/wifi.gif)
+
+Chances are, the bulit-in WiFi adapter on your laptop won't be supported by Kali. That's what I've provided some handy USB WiFi adapters. Among other things, these will get you jacked back into the Internet.
+
+1. Plug in your Panda PAU05 USB WiFi adapter
+2. Open the Terminal by pressing `command+shift+2` or clicking its icon in the dock.
+3. Run the command `nm-connection-editor`.
+4. Click the **+** button to add a new network connection.
+5. Select **"Wi-Fi"** from the pull-down menu and click **"Create"**.
+6. Give the connection a simple, easy-to-remember **"Connection name"**.
+7. Enter the **SSID** or name of the WiFi network
+8. Select the **"wlan0"** device from the **"Device"** pull-down menu.
+9. Select **"Random"** from the **"Cloned MAC address"** pull-down menu.
+10. Click the **"Wi-Fi Security"** tab and choose **"WPA & WPA 2 Personal"** from the **"Security"** pull-down menu.
+11. *(optional)* Click the **"General"** tab and uncheck all the boxes.
+12. Click **"Save"** and close the window.
+13. Bring up the Terminal and run `nmcli c up "<Connection name>"` and replace `<Connection name>` with whatever you named the connection. Note: if you used spaces, you need to use `""`.
+
+You should now be connected to the Internets!
+
+## Maintaining Kali with `apt`
+
+APT is short for Advanced Package Tool that manages the installation and removal of software on Linux distributions like Debian and Ubuntu. Kali is a Debian based distribution so we use `apt` to do all the same things we'd use `brew` for in OSX, and more.
+
+**WARNING!** Updating your software packages might take a long time and eat up a lot of disk space.
+
+The process for updating all the software on you Kali Live USB with Encrypted Persistence is as simple as running:
+
+```
+apt update && apt dist-upgrade
+```
+
+If for some reason, apt update gives you a weird error like:
+
+```
+E: Could not get lock /var/lib/apt/lists/lock - open (11: Resource temporarily unavailable)
+E: Unable to lock directory /var/lib/apt/lists
+```
+
+Run this:
+
+```
+rm /var/lib/apt/lists/* -vf
+```
+
+And try again.
+
+Once the process is going, it'll take a while. When it's finished run:
+
+```
+apt autoclean
+apt autoremove
+```
+If prompted, type "Y" and press enter to remove unused dependencies.
+
+Make some time to regularly run these commands.
+
+-
+
+![](images/success.jpg)
+
+Now we can get to hacking like pros.
+
+Thanks for taking the first two modules of Ethical Hacking. Now that we have a working understanding of the UNIX/LINUX command line interface AND a shiny new Kali, we're ready to move on to:
+
+## Module 03
+
+* **WiFi Hacking** - WPS and WPA attacks
+
+## Module 04:
+
+* **Network Discovery** - Host Discovery and Port Scanning
