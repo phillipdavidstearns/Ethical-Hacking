@@ -176,7 +176,7 @@ To cover you @\$\$ and your clients', we need to make sure we've encrypted our L
 3. Run `fdisk -l` to verify that we can see the `/dev/sdb1` and `/dev/sdb2` partitions. You should see info for other drives on your system but focus on Disk /dev/sdb:
 
 ```
-Disk /dev/sdb: 57.3 GiB, c bytes, 120127488 sectors
+Disk /dev/sdb: 57.3 GiB, 61505273856 bytes, 120127488 sectors
 Disk model: Ultra Fit       
 Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
