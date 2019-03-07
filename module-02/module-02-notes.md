@@ -49,9 +49,10 @@ Get it now by running:
 
 ### Install GPG tools
 
-In order to securely download and verify Kali Linux, we need to have the wget and GPG installed. We can use our shiny new Homebrew utility to help us out.
+In order to securely download and verify Kali Linux, we need to have Balena Etcher, wget and GPG installed. We can use our shiny new Homebrew utility to help us out. (each line is a new command)
 
 ```
+brew cask install balenaetcher
 brew install gpg wget
 ```
 
@@ -114,11 +115,26 @@ Phew! Our files are legit and untampered. Straight from the source!
 
 ## Writing our Kali .iso to our USB drive
 
-This walkthrough borrows heavily from the official [Making a Kali Bootable USB Drive Guide](https://docs.kali.org/downloading/kali-linux-live-usb-install).
+There are two methods we can choose from to write the Kali .iso file to a USB drive. We'll explore both. The second part of this walkthrough borrows heavily from the official [Making a Kali Bootable USB Drive Guide](https://docs.kali.org/downloading/kali-linux-live-usb-install).
 
 ![](images/copy.gif)
 
-We're going to use the `dd` command to write the .iso to our thumbdrive.
+### Option 1: Quick and Easy with Balena Etcher
+
+In the interest of saving time in the workshop context, there's a quick and safe option for writing your Kali .iso file to your USB drive.
+
+1. If you didn't already do so, run `brew cask install balenaetcher` to install Balena Etcher.
+2. Open Balena Etcher by running `open /Applications/balenaEtcher.app`
+3. Click **"Select image"** and choose the kali .iso
+4. Click **"Select drive"** and choose the USB thumbdrive
+5. Click **"Flash!"**
+6. To boot from our drive, run `sudo reboot` and hold down **option** as the device boots. Our live boot will show up as EFI. Select it and press enter.
+
+Users of the newer MacBookPros with the T2 chips will have to jump through some extra hoops to bypass some of the security features. 
+
+### Option 2: Slower but More 1337 with `diskutil` and `dd`
+
+Using the `dd` command to write the .iso to our thumbdrive.
 
 >
 WARNING: Although the process of imaging Kali on a USB drive is very easy, you can just as easily overwrite a disk drive you didn’t intend to with dd if you do not understand what you are doing, or if you specify an incorrect output path. Double-check what you’re doing before you do it, it’ll be too late afterwards.
@@ -219,14 +235,14 @@ cryptsetup luksOpen /dev/sdb3 my_usb
 ```
 
 
-8. Create the ext3 filesystem, and label it “persistence”.
+8. Create the ext3 filesystem, and label it “persistence”. (each line is a new command)
 
 ```
 mkfs.ext3 -L persistence /dev/mapper/my_usb
 e2label /dev/mapper/my_usb persistence
 ```
 
-9. Create a mount point, mount our new encrypted partition there, set up the persistence.conf file, and unmount the partition.
+9. Create a mount point, mount our new encrypted partition there, set up the persistence.conf file, and unmount the partition. (each line is a new command)
 
 ```
 mkdir -p /mnt/my_usb
