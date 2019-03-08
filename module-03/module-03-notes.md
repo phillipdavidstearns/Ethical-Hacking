@@ -59,9 +59,29 @@ Some of the tools that we'll be covering today include:
 * **aireplay-ng** - a tool that can perform various packet injection attacks that aid in WEP and WPA cracking
 * **aicrack-ng** - an offline WEP and WPA brute force password cracking tool
 
+
+### WiFi At a Glance: IEEE 802.11
+
+WiFi is a technology for wireless networking based on the IEEE 802.11 standards.
+
+>IEEE 802.11 is part of the IEEE 802 set of LAN protocols, and specifies the set of media access control (MAC) and physical layer (PHY) protocols for implementing wireless local area network (WLAN) Wi-Fi computer communication in various frequencies, including but not limited to 2.4, 5, and 60 GHz frequency bands.
+
+--source [https://en.wikipedia.org/wiki/IEEE_802.11](https://en.wikipedia.org/wiki/IEEE_802.11)
+
+Data is communicated over most networks in packets. These packets are formatted according to the protocols in use. Most data transmitted within our local networks and over the internet use the Internet Protocol or IP standard for packet formatting, which consists of two parts:
+
+* **Header** - Contains fixed and optional fields, most notably the desitnation and source addresses
+* **Payload** - Contains the user specified data, like files data, messages between applications, etc.
+
+For more on networking protocols, see the [OSI Model](https://en.wikipedia.org/wiki/OSI_model).
+
 ### Monitor Mode with `airmon-ng`
 
-Let's say we want to test our home network setup for any vulnerabilities. The first step would be to figure out if your network is visible to an attacker, and what they might be able to find out about who is connected to your network.
+Wireless cards can operate in one of eight modes as established by the IEEE 802.11 protocol: Master (acting as an access point), Managed (client, also known as station), Ad hoc, Repeater, Mesh, Wi-Fi Direct, TDLS and Monitor mode.
+
+Monitor mode give us the ability to capture WiFi traffic on a specific channel without having to associate with an access point or other network first.
+
+Let's say we want to test our home network setup for any vulnerabilities. We need to put our network adapter in monitor mode and figure out if your network is visible to an attacker. The first step is to find the name of the network device:
 
 1. Fire up Kali if you haven't already.
 2. Open the Terminal app.
@@ -69,13 +89,14 @@ Let's say we want to test our home network setup for any vulnerabilities. The fi
 
 ![](images/ifconfig.png)
 
-`wlan0` is your WiFi adapter. In Linux land the entries here are called devices. `lo` is your local host device. It's a virtual network device that lets applications send data to each other using network protocols. It's good for testing, but let's focus on `wlan0`.
+* **lo** - Is the local virtual network running on your computer. This can help you test network applications locally, and can also communicate between local applications via network protocols.
+* **wlan0** - If you don't have any other compatible WiFi devices, `wlan0` is your WiFi adapter, otherwise, its `wlan1` or last in the list of wlan devices.
 
 If we want to "sniff" the airwaves for WiFi data packets, we need to put our adapter in monitor mode. There are a couple of ways to do this. We'll use `airmon-ng` because it's simple, quick, and safe.
 
 1. Run `airmon-ng start wlan0`
 2. Run `ifconfig` again and check out the results.
-3. You should have a new device, `wlan0mon`, and `wlan0` if nowhere to be found.
+3. You should have a new device, `wlan0mon`, and `wlan0` is nowhere to be found.
 
 ### On the Airwaves
 
@@ -113,6 +134,28 @@ OK... We'll come back to Wireshark in a bit. Let's move on to our first attack.
 
 Some of these attacks have to to with the hardware configurations, others have to do with vulnerabilities in the way WiFi security features are implemented. We'll have a look at some hardware based vulnerabilities that have *mostly* been mitigrated or removed in contemporary hardware.
 
+### Safety First...
+
+I shouldn't have to tell you at this point, but you shouldn't perform the following attacks on networks  you don't own or don't have permission to test.
+
+That said, if you're going to go rogue, do so at your own peril, but please take some precautions to protect yourself and maintain anonymity:
+
+1. Use a live system and make sure any persistent data is securely encrypted with a strong key.
+2. Change your MAC address (see next section)
+3. Think before you press enter.
+
+### MAC Spoofing
+
+All network hardware has a permanent and unique identification number burned into to. This media access control or MAC address is used by networking protocols to establish routes to and from specific devices. For instance, when your device connects to a network, it first assigns its own IP and then broadcasts a request for an IP address to be assign. In this request is your device's MAC address. The router then assigns an IP address to that MAC address.
+
+You don't and shouldn't use your permanent MAC address if you don't want to be tracked. If you connect to a network without first spoofing your MAC address, your hardware's permanent finger print will appear in whatever networks logs are being kept, making it a snap to link your activity to a physical device, and likely to you.
+
+Luckily it's easy to spoof your MAC address using `macchanger` a utility that can allow you to randomize or specify a MAC address that you can use instead of your hardware's permanent address:
+
+1. Bring down the device you want to change: `ip link set wlan0mon down`
+2. Set your MAC to a random value: `macchanger -r wlan0`
+3. Bring up the device `ip link set wlan0mon up`
+
 ## WPS Attacks
 
 ![](images/wps.png)
@@ -122,16 +165,6 @@ If I were an attacker, I'd go for the low hanging fruit, vulnerabilities that ma
 WPS stands for WiFi Protected Setup. It was a protocol established for WiFi Protected Access (WPA) that enabled easy connection to a network based on an 8 digital pin. Supplying the correct PIN would allow access to the network. However, unless there are security measures in place, brute forcing the PIN is a trivial matter due to how the PIN is generated and how the protocol responds to a partially correct PIN. Full details can be found [here](goodies/viehboeck_wps.pdf).
 
 The US Cyber Emergency Response Team (CERT) issued [a bulletin](https://www.us-cert.gov/ncas/alerts/TA12-006A) regarding WPS in 2012. If device manufacturers had immediately begun implementing secure default settings disabling WPS by default, the number of devices still vulnerable to this kind of attack would be a lot less. Today, most devices ship with WPS disabled, and those that don't employ some form of rate limiting.
-
-### Safety First...
-
-I shouldn't have to tell you at this point, but you shouldn't perform the following attacks on networks  you don't own or don't have permission to test.
-
-That said, if you're going to go rogue, do so at your own peril, but please take some precautions to protect yourself and maintain anonymity:
-
-1. Use a live system and make sure any persistent data is securely encrypted with a strong key.
-2. Change your MAC address using `macchanger -r wlan0mon`.
-3. Think before you press enter.
 
 Using the following techniques, you can test whether your devices is vulnerable. If yours is and you can't disable WPS, then it's time to consider upgrading to a new router.
 
@@ -146,9 +179,13 @@ This method is likely not going to work. But if it does, then you should probabl
 * `reaver`
 
 1. If your WiFi device isn't already in **monitor mode**, run `airmon-ng start wlan0`
-2. Next run `wash -i wlan0mon` and let it run for a minute or so
-3. You should see the access point you want to test. Make note of it's **BSSID** and **channel**.
-4. To start the brute force attack, run `reaver -vv -N -i wlan0mon -b 01:23:45:67:89:0F -c 11` and change the **BSSID** after `-b` and the **channel** after `-c` to suit your needs.
+2. Next run `wash -i wlan0mon` and let it run for a minute or so.
+
+![](images/wash.png)
+
+3. You should see the **ESSID** or name of access point you want to test. Make note of it's **BSSID**  (MAC address) and **channel**. Presse `control+c` to stop `wash`.
+4. If the **RSSI** is below -60 then you're close enough to run the attack with a good chance of success. If not, then you need to either get closer or improve the range of your antenna.
+5. To start the brute force attack, run `reaver -vv -N -i wlan0mon -b <BSSID> -c <Channel>`, changing the **BSSID** after `-b` and the **channel** after `-c` to suit your needs.
 
 `reaver` randomly guesses the pin and keeps track of its progress, creating a unique session for each BSSID you attempt to crack. Chances are, you'll get in 3, maybe 5 guesses before `reaver` tells you that it detects rate limiting and will try again in 60 seconds. If you're patient and have no where to go for a few days, you can keep this up. Eventually you'll get through. Otherwise, you can setup a Raspberry Pi to run this attack while you go on with your life.
 
@@ -159,10 +196,12 @@ This method is likely not going to work. But if it does, then you should probabl
 Some chipsets are vulnerable to the Pixie Dust attack, which makes cracking the WPS pin a breeze. Provided you're close enough to the AP, within a few minutes, you should be able to crack the network keys.
 
 1. Do steps 1-3 of the brute force instructions above.
-2. Run `reaver -vv -N -i wlan0mon -b 01:23:45:67:89:0F -c 11 - Z`
+2. Run `reaver -vv -N -i wlan0mon -b <BSSID> -c <Channel> -Z`
 3. If you're lucky, it'll find the PIN on the first try. Sometimes you have to try multiple times before you get a a good sense of whether your target is vulnerable.
-4. If you do find the PIN, run `reaver -vv -N -i wlan0mon -b 01:23:45:67:89:0F -c 11 -p 12345678` and replace the number after `-p` with the PIN you found.
+4. If you do find the PIN, run `reaver -vv -N -i wlan0mon -b <BSSID> -c <Channel> -p <Pin>` and replace the number after `-p` with the PIN you found.
 5. That should give you the WPA keys.
+
+These attacks require a lot of trial and error. Sometimes you'll notice that reaver repeatedly times out at the EAPOL START request, or that some other process seems to repeat without making progress. If the PIN doesn't change, or if it doesn't advance into the PixieWPS attack, then you should stop and try again.
 
 From my experience, certain chipsets and versions are more vulnerable than others. I've not gone through and made a comprehensive list, but generally, I find Broadcom to be pretty much resistant to Pixie Dust attacks, RalinkTech are fairly vulnerable, Realtek are sometimes vulnerable, and Atheros occasionally vulnerable.
 
@@ -206,7 +245,7 @@ A hashing algorithm is a one way translation of a digital file into a unique str
 14. Select a name and location, the choose `Wireshark/tcpdump/... - pcap` from the "save as" drop down menu.
 15. Save!
 
-### Cracking Dictionary Attacks
+### Cracking: Dictionary Attacks
 
 ![](images/aircracked.png)
 
