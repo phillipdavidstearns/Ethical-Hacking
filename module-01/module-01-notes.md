@@ -165,7 +165,17 @@ Using some of the techniques we'll explore in this class, I build a Bash script 
 
 If you really want MAC Address spoofing to work, you'll have to set your computer's network name to something generic too. How about MacBook or iPhone.
 
--
+### Internet Privacy Resources:
+
+This is an incomplete list of resources to maintaining privacy and staying anonymous online:
+
+* [Greycoder Blog](https://greycoder.com/)
+* [Electronic Frontier Foundation](https://www.eff.org/)
+* [Freedom of the Press Foundation](https://freedom.press/)
+* [Secure Drop](https://securedrop.org/)
+
+
+---
 
 # Ethical Hacking
 
@@ -181,6 +191,33 @@ As broadly as possible: The use of technical knowledge and skills to cause a sys
 
 A computer hacker is any skilled computer expert that uses their technical knowledge to overcome a problem.
 
+>hacker: n.
+>
+>[originally, someone who makes furniture with an axe] 
+>
+>1. A person who enjoys exploring the details of programmable systems and how to stretch their capabilities, as opposed to most users, who prefer to learn only the minimum necessary. RFC1392, the Internet Users' Glossary, usefully amplifies this as: A person who delights in having an intimate understanding of the internal workings of a system, computers and computer networks in particular.
+>
+>2. One who programs enthusiastically (even obsessively) or who enjoys programming rather than just theorizing about programming. 
+>
+>3. A person capable of appreciating hack value. 
+>
+>4. A person who is good at programming quickly. 
+>
+>5. An expert at a particular program, or one who frequently does work using it or on it; as in ‘a Unix hacker’. (Definitions 1 through 5 are correlated, and people who fit them congregate.) 
+>
+>6. An expert or enthusiast of any kind. One might be an astronomy hacker, for example. 
+>
+>7. One who enjoys the intellectual challenge of creatively overcoming or circumventing limitations. 
+>
+>8. [deprecated] A malicious meddler who tries to discover sensitive information by poking around. Hence password hacker, network hacker. The correct term for this sense is cracker.
+>
+>The term ‘hacker’ also tends to connote membership in the global community defined by the net (see the network. For discussion of some of the basics of this culture, see the How To Become A Hacker FAQ. It also implies that the person described is seen to subscribe to some version of the hacker ethic (see hacker ethic).
+>
+>It is better to be described as a hacker by others than to describe oneself that way. Hackers consider themselves something of an elite (a meritocracy based on ability), though one to which new members are gladly welcome. There is thus a certain ego satisfaction to be had in identifying yourself as a hacker (but if you claim to be one and are not, you'll quickly be labeled bogus). See also geek, wannabee.
+>
+>This term seems to have been first adopted as a badge in the 1960s by the hacker culture surrounding TMRC and the MIT AI Lab. We have a report that it was used in a sense close to this entry's by teenage radio hams and electronics tinkerers in the mid-1950s.
+
+--source: [http://www.catb.org/~esr/jargon/html/H/hacker.html](http://www.catb.org/~esr/jargon/html/H/hacker.html)
 ## Hacker Culture
 
 ![](images/culture.gif)
@@ -225,7 +262,7 @@ Not: "If you can't hack it, you don't own it."
 [Hacker Culture](https://en.wikipedia.org/wiki/Hacker_culture)
 [Security Hacker](https://en.wikipedia.org/wiki/Security_hacker)
 
--
+---
 
 # Terminals - Command Lines - Shells
 
@@ -237,7 +274,7 @@ Not: "If you can't hack it, you don't own it."
 
 **Shell:** a user interface for access to an operating system’s services. can be graphical (GUI) or text based command line interface (CLI).
 
-###### [ref 1](https://askubuntu.com/questions/506510/what-is-the-difference-between-terminal-console-shell-and-command-line)| [ref 2](https://www.shsu.edu/~csc_tjm/cs431/shellprog.html)| [ref 3](http://homepages.uc.edu/~thomam/Intro_Unix_Text/File_System.html)| [ref 4](https://www.howtogeek.com/125157/8-deadly-commands-you-should-never-run-on-linux/)
+**[ref 1](https://askubuntu.com/questions/506510/what-is-the-difference-between-terminal-console-shell-and-command-line)| [ref 2](https://www.shsu.edu/~csc_tjm/cs431/shellprog.html)| [ref 3](http://homepages.uc.edu/~thomam/Intro_Unix_Text/File_System.html)| [ref 4](https://www.howtogeek.com/125157/8-deadly-commands-you-should-never-run-on-linux/)**
 
 ## Terminal.app
 
@@ -259,6 +296,8 @@ You can also access the terminal application from Finder by navigating to **Appl
 Bash is a Unix shell written by Brian Fox. It replaces the Bourne shell, developed by Stephen Bourne. Bash is a short for Bourne-again Shell, yes, I see what Brian did there very punny…
 
 Bash is a command processor that runs in a text window. It can also read and execute commands from a file, a shell script.
+
+* [Bash Guide for Beginners](https://www.tldp.org/LDP/Bash-Beginners-Guide/html/)
 
 ## Commands
 

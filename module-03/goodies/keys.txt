@@ -1,0 +1,7 @@
+hackme-01 WPS pixie dust
+hackme-02 rockyou brute force
+hackme-03 netgear killer
+hackme-04 8-digit numeric default
+hackme-05 8-digit numeric default
+hackme-06 password permutation
+hackme-07 WEP deadbeef01
