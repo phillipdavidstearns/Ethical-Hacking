@@ -136,7 +136,13 @@ Firewalls can be deployed at different points in the network, as hardware device
 
 ## Host Discovery
 
-How do we see what's on our network? There are a few tools are passive, and don't require us to transmit anything:
+How do we see what's on our network? We'll start using some passive methods to observe, then active methods to see what we can scare up.
+
+1. Fire up your Kali machine (physical or virtual)
+2. Log onto the test network:	
+	* SSID: `hackzone`
+	* Key: `1n53cur3!`
+	 
 
 ### `tcpdump`
 
