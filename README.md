@@ -21,7 +21,7 @@ Courses are not totally modular and do not necessarily build off one another acr
 * UNIX, Terminal, CLI
 * Bash and shell scripting
 
-### [Getting Started with Kali Linux](module-02/module-02-notes.md)
+### [Getting Started with Kali Linux](module-02/module-02-notes-update.md)
 
 * Package Managers
 * Verifying Hash and Code Signatures
