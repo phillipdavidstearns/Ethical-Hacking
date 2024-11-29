@@ -30,17 +30,21 @@ Courses are not totally modular and do not necessarily build off one another acr
 * Basic commands and tools
 * Maintaining your Distribution
 
-### Basic WiFi Attacks
+### [Basic WiFi Attacks](./module-03/module-03-notes.md)
 
 * WPS Bruteforce
 * WPS Pixie Dust Attack
 * Capturing and Cracking WPA Keys
 
-### Basic Network Discovery
+### [Basic Network Discovery](./module-04/module-04-notes.md)
 
 * basic network configurations
 * nmap
 * wireshark
+
+---
+
+## TODO:
 
 ### Exploitation Frameworks
 
